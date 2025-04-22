@@ -12,7 +12,8 @@ dependencies = [
     "web3>=6.11.1",
     "tavily-python>=0.2.1",
     "pydantic>=2.5.2",
-    "typing-extensions>=4.8.0"
+    "typing-extensions>=4.8.0",
+    "python-dotenv>=1.0.0"
 ]
 
 [project.optional-dependencies]

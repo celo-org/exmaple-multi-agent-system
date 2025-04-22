@@ -1,5 +1,9 @@
 import os
 from typing import Optional
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # LLM configurations
 DEFAULT_MODEL = "gemini-2.5-flash-preview-04-17"
@@ -28,7 +32,9 @@ def validate_config() -> bool:
         print(
             f"Error: Missing required environment variables: {', '.join(missing_vars)}"
         )
-        print("Please set these variables before running the application.")
+        print(
+            "Please set these variables in .env file or environment before running the application."
+        )
         return False
 
     return True
