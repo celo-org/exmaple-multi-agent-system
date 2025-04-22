@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Dict, Any, Union
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph_supervisor import create_supervisor
 from langgraph.checkpoint.memory import InMemorySaver
+from langchain_core.messages import BaseMessage
 
 from src.agents.blockchain_agent import create_blockchain_agent
 from src.agents.search_agent import create_search_agent
@@ -48,3 +49,26 @@ def create_multi_agent_system():
 
     # Compile the workflow with the checkpointer
     return workflow.compile(checkpointer=checkpointer)
+
+
+def invoke_multi_agent_system(
+    agent_system,
+    messages: List[Union[Dict[str, Any], BaseMessage]],
+    thread_id: str = "default",
+):
+    """
+    Invoke the multi-agent system with the specified thread_id.
+
+    Args:
+        agent_system: The compiled LangGraph multi-agent system
+        messages: List of messages in the conversation (LangChain message objects)
+        thread_id: The thread identifier for this conversation
+
+    Returns:
+        The result from the multi-agent system
+    """
+    # Create configuration with thread_id
+    config = {"configurable": {"thread_id": thread_id}}
+
+    # Invoke the system with the proper configuration
+    return agent_system.invoke({"messages": messages}, config)

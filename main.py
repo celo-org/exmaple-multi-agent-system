@@ -1,13 +1,28 @@
 import sys
 import json
-from typing import Dict, Any, List
+import uuid
+from typing import Dict, Any, List, Union
 
-from src.agents.supervisor import create_multi_agent_system
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
+
+from src.agents.supervisor import create_multi_agent_system, invoke_multi_agent_system
 from src.utils.config import validate_config
 
 
-def format_message(message: Dict[str, Any]) -> str:
+def format_message(message: Union[Dict[str, Any], BaseMessage]) -> str:
     """Format a message for display."""
+    # Handle LangChain message objects
+    if isinstance(message, BaseMessage):
+        if isinstance(message, HumanMessage):
+            return f"\n\033[1m> User:\033[0m {message.content}"
+        elif isinstance(message, AIMessage):
+            return f"\n\033[1;32m> Assistant:\033[0m {message.content}"
+        elif isinstance(message, SystemMessage):
+            return f"\n\033[1;33m> System:\033[0m {message.content}"
+        else:
+            return f"\n> {message.__class__.__name__}: {message.content}"
+
+    # Handle dictionary-format messages
     role = message.get("role", "")
     content = message.get("content", "")
 
@@ -21,6 +36,22 @@ def format_message(message: Dict[str, Any]) -> str:
         return f"\n\033[1;33m> System:\033[0m {content}"
     else:
         return f"\n> {role}: {content}"
+
+
+def dict_to_langchain_message(message: Dict[str, Any]) -> BaseMessage:
+    """Convert a dictionary message to a LangChain message object."""
+    role = message.get("role", "").lower()
+    content = message.get("content", "")
+
+    if role == "user":
+        return HumanMessage(content=content)
+    elif role == "assistant":
+        return AIMessage(content=content)
+    elif role == "system":
+        return SystemMessage(content=content)
+    else:
+        # Default to HumanMessage for unknown roles
+        return HumanMessage(content=content)
 
 
 def main():
@@ -38,6 +69,10 @@ def main():
     multi_agent_system = create_multi_agent_system()
     print("\033[1;33m> System:\033[0m Multi-agent system initialized!")
 
+    # Generate a unique thread ID for this conversation
+    thread_id = str(uuid.uuid4())
+    print(f"\033[1;33m> System:\033[0m Created conversation thread: {thread_id}")
+
     # Initial conversation state
     state = {"messages": []}
 
@@ -53,22 +88,21 @@ def main():
                 print("\n\033[1;33m> System:\033[0m Goodbye!")
                 break
 
-            # Add user message to conversation
-            user_message = {"role": "user", "content": user_input}
+            # Add user message to conversation as LangChain message object
+            user_message = HumanMessage(content=user_input)
             messages = state["messages"] + [user_message]
 
-            # Invoke multi-agent system
+            # Invoke multi-agent system with thread_id
             print("\033[1;33m> System:\033[0m Processing your request...")
-            result = multi_agent_system.invoke({"messages": messages})
+            result = invoke_multi_agent_system(multi_agent_system, messages, thread_id)
 
             # Update state
             state = result
 
             # Display conversation
             for message in state["messages"]:
-                if (
-                    message == user_message
-                ):  # We already displayed the user message when getting input
+                if isinstance(message, HumanMessage) and message.content == user_input:
+                    # We already displayed the user message when getting input
                     continue
                 print(format_message(message))
 
