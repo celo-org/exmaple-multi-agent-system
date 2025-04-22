@@ -42,12 +42,21 @@ graph TB
 
     Main -- Conversation state --> Checkpointer
 
-    style Supervisor fill:#f9d77e,stroke:#f9bc02
-    style BlockchainAgent fill:#a4c2f4,stroke:#1155cc
-    style SearchAgent fill:#b6d7a8,stroke:#38761d
-    style Main fill:#d5a6bd,stroke:#a64d79
-    style Checkpointer fill:#ead1dc,stroke:#a64d79
-    style User fill:#f9cb9c,stroke:#e69138
+    style Supervisor fill:#ffd700,stroke:#ff8c00,color:#000
+    style BlockchainAgent fill:#60caff,stroke:#00bfff,color:#000
+    style SearchAgent fill:#98fb98,stroke:#3cb371,color:#000
+    style Main fill:#ff7eb9,stroke:#ff1493,color:#000
+    style Checkpointer fill:#bf9fee,stroke:#9370db,color:#000
+    style User fill:#ffa07a,stroke:#ff6347,color:#000
+    style BlockNumber fill:#87cefa,stroke:#1e90ff,color:#000
+    style BlockInfo fill:#87cefa,stroke:#1e90ff,color:#000
+    style CeloStats fill:#87cefa,stroke:#1e90ff,color:#000
+    style SearchWeb fill:#98fb98,stroke:#3cb371,color:#000
+    style SearchNews fill:#98fb98,stroke:#3cb371,color:#000
+    style WebTools fill:#c1ffc1,stroke:#3cb371,color:#000
+    style CeloTools fill:#b0e2ff,stroke:#1e90ff,color:#000
+    style ThreadID fill:#bf9fee,stroke:#9370db,color:#000
+    classDef default color:#000
 ```
 
 ## Setup
