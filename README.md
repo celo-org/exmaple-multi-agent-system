@@ -1,6 +1,6 @@
 # Multi-Agent System
 
-A production-grade multi-agent system built with LangGraph and LangChain, featuring a web search agent and a Celo blockchain agent.
+A production-grade multi-agent system built with LangGraph and LangChain, featuring a web search agent and a Celo blockchain agent powered by Google's Gemini.
 
 ## Features
 
@@ -8,6 +8,7 @@ A production-grade multi-agent system built with LangGraph and LangChain, featur
 - 🔍 **Web search agent** for retrieving real-time information
 - ⛓️ **Blockchain agent** for fetching Celo blockchain data
 - 📊 **Memory management** for conversation history
+- 🤖 **Gemini AI** for intelligent agent capabilities
 
 ## Setup
 
@@ -21,7 +22,7 @@ pip install -e ".[dev]"
 3. Set up environment variables:
 
 ```bash
-export OPENAI_API_KEY=your_openai_api_key
+export GOOGLE_API_KEY=your_google_api_key
 export TAVILY_API_KEY=your_tavily_api_key
 ```
 

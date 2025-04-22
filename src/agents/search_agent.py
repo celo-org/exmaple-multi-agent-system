@@ -1,8 +1,8 @@
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.prebuilt import create_react_agent
 
 from src.tools.search_tools import search_web, search_news
-from src.utils.config import DEFAULT_MODEL, DEFAULT_TEMPERATURE, OPENAI_API_KEY
+from src.utils.config import DEFAULT_MODEL, DEFAULT_TEMPERATURE, GOOGLE_API_KEY
 
 
 def create_search_agent():
@@ -13,8 +13,10 @@ def create_search_agent():
         A LangGraph agent that can search the web for information.
     """
     # Create the model
-    model = ChatOpenAI(
-        model=DEFAULT_MODEL, temperature=DEFAULT_TEMPERATURE, api_key=OPENAI_API_KEY
+    model = ChatGoogleGenerativeAI(
+        model=DEFAULT_MODEL,
+        temperature=DEFAULT_TEMPERATURE,
+        google_api_key=GOOGLE_API_KEY,
     )
 
     # Define search tools

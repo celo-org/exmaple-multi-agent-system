@@ -1,11 +1,11 @@
 from typing import List
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph_supervisor import create_supervisor
 from langgraph.checkpoint.memory import InMemorySaver
 
 from src.agents.blockchain_agent import create_blockchain_agent
 from src.agents.search_agent import create_search_agent
-from src.utils.config import DEFAULT_MODEL, DEFAULT_TEMPERATURE, OPENAI_API_KEY
+from src.utils.config import DEFAULT_MODEL, DEFAULT_TEMPERATURE, GOOGLE_API_KEY
 
 
 def create_multi_agent_system():
@@ -16,8 +16,10 @@ def create_multi_agent_system():
         A compiled LangGraph multi-agent system
     """
     # Create the model for the supervisor
-    model = ChatOpenAI(
-        model=DEFAULT_MODEL, temperature=DEFAULT_TEMPERATURE, api_key=OPENAI_API_KEY
+    model = ChatGoogleGenerativeAI(
+        model=DEFAULT_MODEL,
+        temperature=DEFAULT_TEMPERATURE,
+        google_api_key=GOOGLE_API_KEY,
     )
 
     # Create specialized agents
