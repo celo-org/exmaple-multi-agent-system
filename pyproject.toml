@@ -1,0 +1,27 @@
+[project]
+name = "multi-agent-system"
+version = "0.1.0"
+description = "A production-grade multi-agent system with web search and blockchain capabilities"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langgraph>=0.0.27",
+    "langchain>=0.0.344",
+    "langchain-openai>=0.0.2",
+    "langgraph-supervisor>=0.0.6",
+    "web3>=6.11.1",
+    "tavily-python>=0.2.1",
+    "pydantic>=2.5.2",
+    "typing-extensions>=4.8.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.3.0",
+    "flake8>=6.0.0",
+    "pytest>=7.3.1",
+]
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
